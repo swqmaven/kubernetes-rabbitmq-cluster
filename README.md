@@ -54,4 +54,5 @@ It's fork and modify from https://github.com/binarin/rabbit-on-k8s-standalone.gi
           {'rabbit@172.24.7.9',[]}]}]
 
     ```
+
     ![image](https://github.com/swqmaven/kubernetes-rabbitmq-cluster/blob/master/rabbit_mq.png)
