@@ -36,7 +36,7 @@ It's fork and modify from https://github.com/binarin/rabbit-on-k8s-standalone.gi
     ```
       rabbitmqctl add_user admin 1
       rabbitmqctl set_user_tags admin administrator
-      rabbitmqctl set_permissions admin ".\*" ".\*" ".\*"
+      rabbitmqctl set_permissions admin ".*" ".*" ".*"
     ```
 
   - Check cluster
@@ -44,15 +44,6 @@ It's fork and modify from https://github.com/binarin/rabbit-on-k8s-standalone.gi
       kubectl get pods
       kubectl exec rabbitmq-autocluster-2840882472-8sar0 rabbitmqctl cluster_status
       Cluster status of node 'rabbit@172.24.7.9' ...
-[{nodes,[{disc,['rabbit@172.24.6.5','rabbit@172.24.7.8',
-                'rabbit@172.24.7.9']}]},
- {running_nodes,['rabbit@172.24.6.5','rabbit@172.24.7.8','rabbit@172.24.7.9']},
- {cluster_name,<<"rabbit@rabbitmq-autocluster-2840882472-lkp61">>},
- {partitions,[]},
- {alarms,[{'rabbit@172.24.6.5',[]},
-          {'rabbit@172.24.7.8',[]},
-          {'rabbit@172.24.7.9',[]}]}]
-
     ```
 
     ![image](https://github.com/swqmaven/kubernetes-rabbitmq-cluster/blob/master/rabbit_mq.png)
