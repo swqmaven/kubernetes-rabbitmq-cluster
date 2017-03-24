@@ -39,18 +39,19 @@ It's fork and modify from https://github.com/binarin/rabbit-on-k8s-standalone.gi
       rabbitmqctl set_permissions admin ".\*" ".\*" ".\*"
     #+END_SRC
 
-    And we should see some output similar to the following one (where
-    the most important bit of information is that ~nodes~ and
-    ~running_nodes~ both contain 3 names):
+  - Check cluster
     #+BEGIN_EXAMPLE
-      Cluster status of node 'rabbit@172.17.0.3' ...
-      [{nodes,[{disc,['rabbit@172.17.0.3','rabbit@172.17.0.4',
-                      'rabbit@172.17.0.7']}]},
-       {running_nodes,['rabbit@172.17.0.4','rabbit@172.17.0.7','rabbit@172.17.0.3']},
-       {cluster_name,<<"rabbit@rabbitmq-deployment-861116474-cmshz">>},
-       {partitions,[]},
-       {alarms,[{'rabbit@172.17.0.4',[]},
-                {'rabbit@172.17.0.7',[]},
-                {'rabbit@172.17.0.3',[]}]}]
+      kubectl get pods
+      kubectl exec rabbitmq-autocluster-2840882472-8sar0 rabbitmqctl cluster_status
+      Cluster status of node 'rabbit@172.24.7.9' ...
+[{nodes,[{disc,['rabbit@172.24.6.5','rabbit@172.24.7.8',
+                'rabbit@172.24.7.9']}]},
+ {running_nodes,['rabbit@172.24.6.5','rabbit@172.24.7.8','rabbit@172.24.7.9']},
+ {cluster_name,<<"rabbit@rabbitmq-autocluster-2840882472-lkp61">>},
+ {partitions,[]},
+ {alarms,[{'rabbit@172.24.6.5',[]},
+          {'rabbit@172.24.7.8',[]},
+          {'rabbit@172.24.7.9',[]}]}]
 
     #+END_EXAMPLE
+    ![image](https://github.com/swqmaven/kubernetes-rabbitmq-cluster/rabbit_mq.png)
