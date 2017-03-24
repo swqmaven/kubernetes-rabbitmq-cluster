@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-autocluster
+  labels:
+    app: rabbitmq-autocluster
+spec:
+  type: NodePort
+  ports:
+  - port: 5672
+    targetPort: 5672
+    nodePort: 31672
+    name: queue-port
+  - port: 15672
+    targetPort: 15672
+    nodePort: 31673
+    name: management-port
+  - port: 4369
+    targetPort: 4369
+    nodePort: 31369
+    name: cluster-port
+  - port: 25672
+    targetPort: 25672
+    nodePort: 31674
+    name: dist-port
+  selector:
+    app: rabbitmq-autocluster
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: rabbitmq-autocluster
+  namespace: default
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-autocluster
+    spec:
+      containers:
+      - name: rabbitmq-autocluster
+        image: rabbitmq-autocluster:latest
+        ports:
+          - name: queue-port
+            containerPort: 5672
+          - name: queue-port2
+            containerPort: 5671
+          - name: management-port
+            containerPort: 15672
+          - name: cluster-port
+            containerPort: 4369
+          - name: dist-port
+            containerPort: 25672
+        # `Never` as we are not using registry in our `minikube` setup
+        imagePullPolicy: IfNotPresent
+        env:
+          # For consupmption by rabbitmq-env.conf
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          # start.sh will store this value to a proper location in filesystem
+          - name: ERLANG_COOKIE
+            valueFrom:
+              secretKeyRef:
+                name: erlang.cookie
+                key: erlang.cookie
+        command:
+          - "/start.sh"
