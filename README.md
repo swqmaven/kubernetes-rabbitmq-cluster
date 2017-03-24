@@ -13,12 +13,11 @@ It's fork and modify from https://github.com/binarin/rabbit-on-k8s-standalone.gi
   - Make some etcd installation available under ~etcd~ name
     ```
       kubectl run etcd --image=microbox/etcd --port=4001 -- --name etcd
-      kubectl --namespace=demo expose deployment etcd
+      kubectl expose deployment etcd
     ```
 
   - Build a Docker image
     ```
-      eval $(minikube docker-env)
       docker build . -t rabbitmq-autocluster
     ```
 
