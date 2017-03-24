@@ -1,4 +1,4 @@
-* RabbitMQ cluster on kubernetes
+## RabbitMQ cluster on kubernetes
 
 It's fork and modify from https://github.com/binarin/rabbit-on-k8s-standalone.git
 
